@@ -1,4 +1,7 @@
+/*globals sweetAlert*/
+
 'use strict';
+
 
 $('#contactUs').click( function (e) {
 	e.preventDefault();
@@ -6,7 +9,7 @@ $('#contactUs').click( function (e) {
 	email = $('#email').val(),
 	message = $('#message').val();
 	if (name === '' || email === '' || message === '') {
-		sweetAlert("Oops...", "You must fill all fields!", "error");
+		sweetAlert('Oops...', 'You must fill all fields!', 'error');
 	}
 	else {
 		$.ajax({

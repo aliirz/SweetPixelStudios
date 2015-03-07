@@ -142,15 +142,7 @@ module.exports = function (grunt) {
             all: [
                 // 'Gruntfile.js',
                 // '<%= config.app %>/indie-gaming-pakistan-scripts/{,*/}*.js',
-            '<%= config.app %>/assets/js/demo/{,*/}*.js',
-            '<%= config.app %>/assets/js/filterable/{,*/}*.js',
-            '<%= config.app %>/assets/js/flexslider/{,*/}*.js',
-            '<%= config.app %>/assets/js/gmap/{,*/}*.js',
-            '<%= config.app %>/assets/js/nav/{,*/}*.js',
-            '<%= config.app %>/assets/js/parallax/{,*/}*.js',
-            '<%= config.app %>/assets/js/supersized/{,*/}*.js',
-            '<%= config.app %>/assets/js/{,*/}*.js',
-                '!<%= config.app %>/scripts/vendor/*'
+            '<%= config.app %>/assets/js/app.js',
             ]
         },
 
@@ -585,17 +577,6 @@ module.exports = function (grunt) {
         'rev',
         'usemin',
         'htmlmin',
-        // 'copySVG',
-        // 'copyAndroidStoreSVG',
-        // 'copyBeBackSoonSVG',
-        // 'copyFacebookSVG',
-        // 'copyFollowusSVG',
-        // 'copyGPlusSVG',
-        // 'copyiOSStoreSVG',
-        // 'copyPlayThisOutSVG',
-        // 'copyRobotWebSVG',
-        // 'copyTwitterSVG',
-        // 'copyRobotMobileSVG',
         'sitemap'
     ]);
 

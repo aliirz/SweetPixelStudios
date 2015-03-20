@@ -1,4 +1,4 @@
-// Generated on 2014-04-19 using generator-lessapp 0.4.10
+// Generated on 2015-03-18 using generator-lessapp 0.4.10
 'use strict';
 
 // # Globbing
@@ -24,13 +24,6 @@ module.exports = function (grunt) {
     // Define the configuration for all the tasks
     grunt.initConfig({
 
-        githooks: {
-          all: {
-            // Will run the jshint and test:unit tasks at every commit
-            'pre-commit': 'jshint',
-        }
-      },
-
         // Project settings
         config: config,
 
@@ -41,7 +34,7 @@ module.exports = function (grunt) {
                 tasks: ['bowerInstall']
             },
             js: {
-                files: ['<%= config.app %>/assets/scripts/{,*/}*.js'],
+                files: ['<%= config.app %>/scripts/{,*/}*.js'],
                 tasks: ['jshint'],
                 options: {
                     livereload: true
@@ -55,12 +48,11 @@ module.exports = function (grunt) {
                 files: ['Gruntfile.js']
             },
             less: {
-                files: ['<%= config.app %>/mobile-games-ios-android-styles/{,*/}*.less'],
+                files: ['<%= config.app %>/styles/{,*/}*.less'],
                 tasks: ['less:server', 'autoprefixer']
             },
             styles: {
-                // files: ['<%= config.app %>/mobile-games-ios-android-styles/{,*/}*.css'],
-            files: ['<%= config.app %>/assets/css/{,*/}*.css'],
+                files: ['<%= config.app %>/styles/{,*/}*.css'],
                 tasks: ['newer:copy:styles', 'autoprefixer']
             },
             livereload: {
@@ -69,8 +61,7 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= config.app %>/{,*/}*.html',
-                    '<%= config.app %>/{,*/}*.css',  // Added this line to check the liverreload working for style.css file
-                    '.tmp/css/{,*/}*.css',
+                    '.tmp/styles/{,*/}*.css',
                     '<%= config.app %>/images/{,*/}*'
                 ]
             }
@@ -140,21 +131,11 @@ module.exports = function (grunt) {
                 reporter: require('jshint-stylish')
             },
             all: [
-                // 'Gruntfile.js',
-                // '<%= config.app %>/indie-gaming-pakistan-scripts/{,*/}*.js',
-            '<%= config.app %>/assets/js/app.js',
+                'Gruntfile.js',
+                '<%= config.app %>/scripts/{,*/}*.js',
+                '!<%= config.app %>/scripts/vendor/*',
+                'test/spec/{,*/}*.js'
             ]
-        },
-
-        csslint: {
-          strict: {
-            options: {
-              import: 2
-            },
-            src: [
-                  '<%= config.app %>/*.css'
-            ]
-          }
         },
 
         // Mocha testing framework configuration options
@@ -179,8 +160,7 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    // cwd: '<%= config.app %>/mobile-games-ios-android-styles',
-                    cwd: '<%= config.app %>/assets/css',
+                    cwd: '<%= config.app %>/styles',
                     src: '{,*/}*.less',
                     dest: '.tmp/styles',
                     ext: '.css'
@@ -194,8 +174,7 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    // cwd: '<%= config.app %>/mobile-games-ios-android-styles',
-                    cwd: '<%= config.app %>/assets/css',
+                    cwd: '<%= config.app %>/styles',
                     src: '{,*/}*.less',
                     dest: '.tmp/styles',
                     ext: '.css'
@@ -211,11 +190,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    // cwd: '.tmp/mobile-games-ios-android-styles/',
-                    cwd: '.tmp/assets/css',
+                    cwd: '.tmp/styles/',
                     src: '{,*/}*.css',
-                    // dest: '.tmp/mobile-games-ios-android-styles/'
-                    dest: '.tmp/assets/css'
+                    dest: '.tmp/styles/'
                 }]
             }
         },
@@ -228,8 +205,7 @@ module.exports = function (grunt) {
                 exclude: ['bower_components/bootstrap/dist/js/bootstrap.js']
             },
             less: {
-                // src: ['<%= config.app %>/mobile-games-ios-android-styles/{,*/}*.less'],
-                src: ['<%= config.app %>/assets/css/{,*/}*.less'],
+                src: ['<%= config.app %>/styles/{,*/}*.less'],
                 ignorePath: '<%= config.app %>/bower_components/'
             }
         },
@@ -240,9 +216,9 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%= config.dist %>/scripts/{,*/}*.js',
-                        '<%= config.dist %>/mobile-games-ios-android-styles/{,*/}*.css',
+                        '<%= config.dist %>/styles/{,*/}*.css',
                         '<%= config.dist %>/images/{,*/}*.*',
-                        '<%= config.dist %>/mobile-games-ios-android-styles/fonts/{,*/}*.*',
+                        '<%= config.dist %>/styles/fonts/{,*/}*.*',
                         '<%= config.dist %>/*.{ico,png}'
                     ]
                 }
@@ -262,10 +238,10 @@ module.exports = function (grunt) {
         // Performs rewrites based on rev and the useminPrepare configuration
         usemin: {
             options: {
-                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/sweet-pixel-studios-images']
+                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
             },
             html: ['<%= config.dist %>/{,*/}*.html'],
-            css: ['<%= config.dist %>/mobile-games-ios-android-styles/{,*/}*.css']
+            css: ['<%= config.dist %>/styles/{,*/}*.css']
         },
 
         // The following *-min tasks produce minified files in the dist folder
@@ -273,27 +249,21 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    // cwd: '<%= config.app %>/sweet-pixel-studios-images',
-                    cwd: '<%= config.app %>/assets/images',
+                    cwd: '<%= config.app %>/images',
                     src: '{,*/}*.{gif,jpeg,jpg,png}',
-                    dest: '<%= config.dist %>/sweet-pixel-studios-images'
+                    dest: '<%= config.dist %>/images'
                 }]
             }
         },
 
         svgmin: {
             dist: {
-                files: {
-                //     // expand: true,
-                //     // cwd: '<%= config.app %>/sweet-pixel-studios-images',
-                //     // src: '{,*/}*.svg',
-                //     src: ['*/*.svg'],
-                //     dest: '<%= config.dist %>/sweet-pixel-studios-images'
-                // }
-                    // src: ['svgs/*.svg'],
-                    // dest: '<%= config.dist %>/sweet-pixel-studios-images'
-                    // 'dist/sweet-pixel-studios-images/Social Media Icons.svg' : 'app/sweet-pixel-studios-images/Social Media Icons.svg'
-                }
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.app %>/images',
+                    src: '{,*/}*.svg',
+                    dest: '<%= config.dist %>/images'
+                }]
             }
         },
 
@@ -317,79 +287,29 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        dploy: {                                    // Task
-            live: {                                // Target
-                host: 'sweetpixelstudios.com',            // Your FTP host
-                user: 'deployer',
-                scheme: 'sftp',
-                privateKey: '~/.ssh/id_rsa',
-                publicKey: '~/.ssh/id_rsa.pub',
-                passphrase: 'sayyam',
-                path: {
-                    local: 'dist/',               // The local folder that you want to upload
-                    remote: '/var/www/sweetpixelstudios'          // Where the files from the local file will be uploaded at in your remote server
-                }
-            },
-            stage: {
-                host: 'sweetpixelstudios.com',            // Your FTP host
-                user: 'deployer',
-                scheme: 'sftp',
-                privateKey: '~/.ssh/id_rsa',
-                publicKey: '~/.ssh/id_rsa.pub',
-                passphrase: 'sayyam',
-                path: {
-                    local: 'dist/',               // The local folder that you want to upload
-                    remote: '/var/www/stagingsps'          // Where the files from the local file will be uploaded at in your remote server
-                  }
-            }
-        },
-
-        gitcommit: {
-            SpsTarget: {
-                options: {
-                    message: 'Deploying'
-                },
-                files: {
-                    src: ['.']
-                }
-            }
-        },
-
-        slack: {
-            options: {
-                token: 'uVprS3ru0zhP2kJdTuwSd5id', // get one from here: https://typekit.slack.com/services
-                domain: 'sweetpixelstudios', // https://domain.slack.com
-                channel: '#general',
-                username: 'Grunt',
-                icon_url: 'http://i.imgur.com/nWZI4IX.png' // if icon_emoji not specified
-            },
-            your_target: {
-                text: 'http://www.sweetpixelstudios.com was just deployed {{message}}' // {{message}} can be replaced with --message='some text' option from command line
-            },
-        },
 
         // By default, your `index.html`'s <!-- Usemin block --> will take care of
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
-        cssmin: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/styles/main.css': [
-                        '.tmp/mobile-games-ios-android-styles/{,*/}*.css',
-                        '<%= config.app %>/assets/css/{,*/}*.css'
-                    ]
-                }
-            }
-        },
-        uglify: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/scripts/scripts.js': [
-                        '<%= config.dist %>/scripts/scripts.js'
-                    ]
-                }
-            }
-        },
+        // cssmin: {
+        //     dist: {
+        //         files: {
+        //             '<%= config.dist %>/styles/main.css': [
+        //                 '.tmp/styles/{,*/}*.css',
+        //                 '<%= config.app %>/styles/{,*/}*.css'
+        //             ]
+        //         }
+        //     }
+        // },
+        // uglify: {
+        //     dist: {
+        //         files: {
+        //             '<%= config.dist %>/scripts/scripts.js': [
+        //                 '<%= config.dist %>/scripts/scripts.js'
+        //             ]
+        //         }
+        //     }
+        // },
         // concat: {
         //     dist: {}
         // },
@@ -407,7 +327,7 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.webp',
                         '{,*/}*.html',
-                        'mobile-games-ios-android-styles/fonts/{,*/}*.*'
+                        'styles/fonts/{,*/}*.*'
                     ]
                 }, {
                     expand: true,
@@ -420,37 +340,11 @@ module.exports = function (grunt) {
             styles: {
                 expand: true,
                 dot: true,
-                cwd: '<%= config.app %>/assets/css',
-                dest: '.tmp/mobile-games-ios-android-styles/',
+                cwd: '<%= config.app %>/styles',
+                dest: '.tmp/styles/',
                 src: '{,*/}*.css'
             }
         },
-
-        // Generates a custom Modernizr build that includes only the tests you
-        // reference in your app
-        modernizr: {
-            dist: {
-                devFile: 'bower_components/modernizr/modernizr.js',
-                outputFile: '<%= config.dist %>/indie-gaming-pakistan-scripts/vendor/modernizr.js',
-                files: {
-                    'src':[
-                        '<%= config.dist %>/indie-gaming-pakistan-scripts/{,*/}*.js',
-                        '<%= config.dist %>/mobile-games-ios-android-styles/{,*/}*.css',
-                        '!<%= config.dist %>/indie-gaming-pakistan-scripts/vendor/*'
-                    ]
-                },
-                uglify: true
-            }
-
-        },
-
-        sitemap: {
-          dist: {
-            siteRoot: 'dist/',
-            homepage: 'http://www.sweetpixelstudios.com'
-          }
-        },
-
 
         // Run some tasks in parallel to speed up build process
         concurrent: {
@@ -490,7 +384,6 @@ module.exports = function (grunt) {
         grunt.task.run([target ? ('serve:' + target) : 'serve']);
     });
 
-
     grunt.registerTask('test', function (target) {
         if (target !== 'watch') {
             grunt.task.run([
@@ -506,10 +399,6 @@ module.exports = function (grunt) {
         ]);
     });
 
-    grunt.registerTask('dev', [
-      'githooks'
-    ]);
-
     grunt.registerTask('build', [
         'clean:dist',
         'useminPrepare',
@@ -519,25 +408,14 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
-        'modernizr',
         'rev',
         'usemin',
-        'htmlmin',
-        'sitemap'
+        'htmlmin'
     ]);
 
     grunt.registerTask('default', [
         'newer:jshint',
         'test',
         'build'
-    ]);
-
-    grunt.registerTask('deploy',[
-        'newer:jshint',
-        'test',
-        'build',
-        'gitcommit',
-        'dploy:live',
-        'slack'
     ]);
 };

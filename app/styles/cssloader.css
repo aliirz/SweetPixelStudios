@@ -1,6 +1,4 @@
 /* Loading CSS Stylesheet */
-@import url(bootstrap.css);
-@import url(font-awesome.min.css);
 @import url(animate.css);
 @import url(grid.css);
 @import url(prettyPhoto.css);
